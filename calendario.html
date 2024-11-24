@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario - WorkSpace 4.A</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body class="bg-gray-900 text-white">
+    <div class="flex">
+        <div class="sidebar w-64 bg-gray-800 h-screen p-5">
+            <div class="logo text-2xl font-bold text-center mb-10"> 4.A Hub</div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="flex items-center p-2 hover:bg-gray-700 rounded"><i class="fas fa-tachometer-alt mr-2"></i> Dashboard</a></li>
+                <li><a href="tasks.html" class="flex items-center p-2 hover:bg-gray-700 rounded"><i class="fas fa-tasks mr-2"></i> Tareas</a></li>
+                <li><a href="calendario.html" class="flex items-center p-2 hover:bg-gray-700 rounded"><i class="fas fa-calendar-alt mr-2"></i> Calendario</a></li>
+                <li><a href="colaboracion.html" class="flex items-center p-2 hover:bg-gray-700 rounded"><i class="fas fa-users mr-2"></i> Colaboración</a></li>
+                <li><a href="https://drive.google.com/drive/folders/1GK3reTjO4PaqhkzU-xMrDvts9FhHznCD" target="_blank" class="flex items-center p-2 hover:bg-gray-700 rounded"><i class="fas fa-folder mr-2"></i> Drive</a></li>
+            </ul>
+        </div>
+
+        <div class="main-content flex-1 p-5">
+            <div class="header mb-5">
+                <h1 class="text-3xl font-semibold">Calendario</h1>
+            </div>
+            <p class="mb-4">Consulta el calendario para estar al tanto de las fechas importantes y eventos.</p>
+            <div class="calendar bg-gray-800 p-4 rounded">
+                <h2 class="text-xl font-semibold mb-2">Eventos Próximos</h2>
+                <ul class="list-disc pl-5">
+                    <li>Reunión de grupo: <strong>15 de marzo</strong></li>
+                    <li>Entrega de proyecto: <strong>22 de marzo</strong></li>
+                    <li>Examen final: <strong>30 de marzo</strong></li>
+                </ul>
+            </div>
+            <iframe src="https://calendar.google.com/calendar/embed?src=ee3f2903769cb310e2590eb75ecc8511de96014926bbe8ab94cd8caeb27a8a95%40group.calendar.google.com&ctz=America%2FSanto_Domingo" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorkSpace - Anonymous</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body class="bg-gray-900 text-white">
+    <div class="flex">
+        <div class="sidebar w-64 bg-gray-800 h-screen p-5">
+            <div class="logo text-2xl font-bold text-center mb-10"> BestHub 4.A</div>
+            <ul class="nav-links">
+                <li><a href="index.html" id="dashboard" class="flex items-center p-2 hover:bg-gray-700 rounded"><i class="fas fa-tachometer-alt mr-2"></i> Dashboard</a></li>
+                <li><a href="https://docs.google.com/document/d/1M4xmvhHJjNSt3i-sg2_ucram2gJ44kQulcz1RqJ8K8I/edit?usp=drive_link" id="tasks" class="flex items-center p-2 hover:bg-gray-700 rounded"><i class="fas fa-tasks mr-2"></i> Tareas</a></li>
+                <li><a href="calendario.html" id="calendar" class="flex items-center p-2 hover:bg-gray-700 rounded"><i class="fas fa-calendar-alt mr-2"></i> Calendario</a></li>
+                <li><a href="colaboracion.html" id="collaboration" class="flex items-center p-2 hover:bg-gray-700 rounded"><i class="fas fa-users mr-2"></i> Colaboración</a></li>
+                <li><a href="https://drive.google.com/drive/folders/1GK3reTjO4PaqhkzU-xMrDvts9FhHznCD" target="_blank" class="flex items-center p-2 hover:bg-gray-700 rounded"><i class="fas fa-folder mr-2"></i> Drive</a></li>
+            </ul>
+        </div>
+
+        <div class="main-content flex-1 p-5">
+            <div class="header mb-5">
+                <h1 class="text-3xl font-semibold">Bienvenido a BestHub Of 4.A</h1>
+            </div>
+
+            <div class="search-bar flex gap-3 mb-5">
+                <input type="text" placeholder="Buscar tareas..." id="searchInput" class="flex-1 p-2 rounded bg-gray-700 border border-gray-600">
+                <select id="subjectFilter" class="p-2 rounded bg-gray-700 border border-gray-600">
+                    <option value="">Todas las asignaturas</option>
+                    <option value="math">Matemáticas</option>
+                    <option value="science">Ciencias</option>
+                    <option value="history">Historia</option>
+                    <option value="informatica"> Informatica</option>
+                    <option value="Lengua">Lengua Esp</option>
+                </select>
+                <select id="statusFilter" class="p-2 rounded bg-gray-700 border border-gray-600">
+                    <option value="">Todos los estados</option>
+                    <option value="pending">Pendiente</option>
+                    <option value="progress">En progreso</option>
+                    <option value="completed">Completado</option>
+                </select>
+            </div>
+
+            <div class="tasks-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" id="tasksGrid">
+                <!-- Las tarjetas de tareas se generarán dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden" id="taskModal">
+        <div class="modal-content bg-gray-800 p-5 rounded-lg w-11/12 max-w-md">
+            <h2 class="text-xl font-semibold mb-4">Nueva Tarea</h2>
+            <form id="taskForm">
+                <div class="form-group mb-4">
+                    <label class="block mb-1">Título</label>
+                    <input type="text" name="title" required class="w-full p-2 rounded bg-gray-700 border border-gray-600">
+                </div>
+                <div class="form-group mb-4">
+                    <label class="block mb-1"> Descripción</label>
+                    <textarea name="description" required class="w-full p-2 rounded bg-gray-700 border border-gray-600"></textarea>
+                </div>
+                <div class="form-group mb-4">
+                    <label class="block mb-1">Asignatura</label>
+                    <select name="subject" required class="w-full p-2 rounded bg-gray-700 border border-gray-600">
+                        <option value="math">Matemáticas</option>
+                        <option value="science">Ciencias</option>
+                        <option value="history">Historia</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-500">Guardar Tarea</button>
+            </form>
+            <button class="close-modal mt-4 w-full bg-red-600 text-white p-2 rounded hover:bg-red-500" onclick="closeModal()">Cerrar</button>
+        </div>
+    </div>
+
+    <script>
+        // Funciones para manejar el almacenamiento local y la visualización de tareas
+        const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+        function renderTasks() {
+            const tasksGrid = document.getElementById('tasksGrid');
+            tasksGrid.innerHTML = '';
+            tasks.forEach(task => {
+                const taskCard = document.createElement('div');
+                taskCard.className = 'bg-gray-800 p-4 rounded shadow';
+                taskCard.innerHTML = `
+                    <h3 class="font-bold">${task.title}</h3>
+                    <p>${task.description}</p>
+                    <p class="text-sm text-gray-400">Asignatura: ${task.subject}</p>
+                    <p class="text-sm text-gray-400">Estado: ${task.status}</p>
+                `;
+                tasksGrid.appendChild(taskCard);
+            });
+        }
+
+        document.getElementById('taskForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const newTask = {
+                title: formData.get('title'),
+                description: formData.get('description'),
+                subject: formData.get('subject'),
+                status: 'pending'
+            };
+            tasks.push(newTask);
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+            renderTasks();
+            closeModal();
+        });
+
+        function closeModal() {
+            document.getElementById('taskModal').classList.add('hidden');
+        }
+
+        renderTasks();
+    </script>
+
+</body>
+</html>

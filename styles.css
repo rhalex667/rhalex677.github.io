@@ -1,0 +1,27 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+    --primary: #000000;
+    --secondary: #1a1a2e;
+    --accent: #16213e;
+    --text: #ffffff;
+}
+
+body {
+    background-color: var(--primary);
+    color: var(--text);
+}
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: var(--secondary);
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 20px;}
